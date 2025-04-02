@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'git-ssh-key', url: 'git@github.com:subhashttn/app2.git', branch: 'hotflix'
+                git credentialsId: 'git-ssh-key', url: 'git@github.com:subhashttn/app2.git'
             }
         }
 
