@@ -7,7 +7,7 @@ pipeline {
         IMAGE_TAG = "hotfix-${BUILD_NUMBER}-${BUILD_DATE}"
         DOCKER_IMAGE = "${ECR_REPO}:${IMAGE_TAG}"
         EKS_CLUSTER_NAME = 'bootcamp'
-        NAMESPACE = 'default'
+        NAMESPACE = 'app2'
         AWS_CREDENTIALS_ID = 'aws-cred'
     }
 
@@ -58,8 +58,8 @@ pipeline {
                         export IMAGE_TAG=${IMAGE_TAG}
                         envsubst < k8s/deployment.yaml > k8s/deployment-updated.yaml
 
-                        kubectl apply -f k8s/deployment-updated.yaml 
-                        kubectl apply -f k8s/service.yaml
+                        kubectl apply -f k8s/deployment-updated.yaml -n ${NAMESPACE}
+                        kubectl apply -f k8s/service.yaml -n ${NAMESPACE}
                         """
                     }
                 }
