@@ -74,13 +74,13 @@ pipeline {
         success {
             script {
                 echo "Deployment successful!"
-                // mail to: 'team@example.com', subject: 'App2 Deployment Success', body: 'App2 deployed successfully to EKS.'
+                mail to: 'abashkumarshah@gmail.com', subject: 'App2 Deployment Success', body: 'App2 deployed successfully to EKS.'
             }
         }
         failure {
             script {
                 echo "Deployment failed!"
-                // mail to: 'team@example.com', subject: 'App2 Deployment Failed', body: 'App2 deployment failed. Please check Jenkins logs.'
+                mail to: 'abashkumarshah@gmail.com', subject: 'App2 Deployment Failed', body: 'App2 deployment failed. Please check Jenkins logs.'
             }
         }
     }
