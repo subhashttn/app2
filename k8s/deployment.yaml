@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: app2
-        image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/app2:hotfix-latest
+        image: ${ECR_REPO}:${IMAGE_TAG}
         ports:
         - containerPort: 80
