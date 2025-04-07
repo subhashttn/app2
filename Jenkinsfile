@@ -49,23 +49,26 @@ pipeline {
         }
 
         stage('Deploy to EKS') {
-            steps {
-                script {
-                    withCredentials([aws(credentialsId: AWS_CREDENTIALS_ID)]) {
-                        sh """
-                        aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
+    steps {
+        script {
+            withCredentials([aws(credentialsId: AWS_CREDENTIALS_ID)]) {
+                sh """
+                aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
 
-                        export IMAGE_TAG=${IMAGE_TAG}
-                        envsubst < k8s/deployment.yaml > k8s/deployment-updated.yaml
+                # Create namespace if not exists
+                kubectl get ns ${NAMESPACE} || kubectl create ns ${NAMESPACE}
 
-                        kubectl apply -f k8s/deployment-updated.yaml -n ${NAMESPACE}
-                        kubectl apply -f k8s/service.yaml -n ${NAMESPACE}
-                        """
-                    }
-                }
+                export IMAGE_TAG=${IMAGE_TAG}
+                envsubst < k8s/deployment.yaml > k8s/deployment-updated.yaml
+
+                kubectl apply -f k8s/deployment-updated.yaml -n ${NAMESPACE}
+                kubectl apply -f k8s/service.yaml -n ${NAMESPACE}
+                """
             }
         }
     }
+}
+
 
     post {
         success {
