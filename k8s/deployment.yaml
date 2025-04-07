@@ -17,4 +17,4 @@ spec:
       - name: app2
         image: ${ECR_REPO}:${IMAGE_TAG}
         ports:
-        - containerPort: 80
+        - containerPort: 3000
