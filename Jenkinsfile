@@ -58,8 +58,8 @@ pipeline {
                         export IMAGE_TAG=${IMAGE_TAG}
                         envsubst < k8s/deployment.yaml > k8s/deployment-updated.yaml
 
-                        kubectl apply -f k8s/deployment-updated.yaml --namespace=${NAMESPACE}
-                        kubectl apply -f k8s/service.yaml --namespace=${NAMESPACE}
+                        kubectl apply -f k8s/deployment-updated.yaml 
+                        kubectl apply -f k8s/service.yaml
                         """
                     }
                 }
