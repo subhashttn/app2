@@ -49,39 +49,39 @@ pipeline {
         }
 
         stage('Deploy to EKS') {
-    steps {
-        script {
-            withCredentials([aws(credentialsId: AWS_CREDENTIALS_ID)]) {
-                sh """
-                aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
+            steps {
+                script {
+                    withCredentials([aws(credentialsId: AWS_CREDENTIALS_ID)]) {
+                        sh """
+                        aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
 
-                # Create namespace if not exists
-                kubectl get ns ${NAMESPACE} || kubectl create ns ${NAMESPACE}
+                        # Create namespace if not exists
+                        kubectl get ns ${NAMESPACE} || kubectl create ns ${NAMESPACE}
 
-                export IMAGE_TAG=${IMAGE_TAG}
-                envsubst < k8s/deployment.yaml > k8s/deployment-updated.yaml
+                        export IMAGE_TAG=${IMAGE_TAG}
+                        envsubst < k8s/deployment.yaml > k8s/deployment-updated.yaml
 
-                kubectl apply -f k8s/deployment-updated.yaml -n ${NAMESPACE}
-                kubectl apply -f k8s/service.yaml -n ${NAMESPACE}
-                """
+                        kubectl apply -f k8s/deployment-updated.yaml -n ${NAMESPACE}
+                        kubectl apply -f k8s/service.yaml -n ${NAMESPACE}
+                        """
+                    }
+                }
             }
         }
-    }
-}
-
+    } 
 
     post {
         success {
             script {
                 echo "Deployment successful!"
-                //mail to: 'team@example.com', subject: 'App2 Deployment Success', body: 'App2 deployed successfully to EKS.'
+                // mail to: 'team@example.com', subject: 'App2 Deployment Success', body: 'App2 deployed successfully to EKS.'
             }
         }
         failure {
             script {
                 echo "Deployment failed!"
-                //mail to: 'team@example.com', subject: 'App2 Deployment Failed', body: 'App2 deployment failed. Please check Jenkins logs.'
+                // mail to: 'team@example.com', subject: 'App2 Deployment Failed', body: 'App2 deployment failed. Please check Jenkins logs.'
             }
         }
     }
-}
+} 
