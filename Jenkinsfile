@@ -20,6 +20,7 @@ pipeline {
                     echo "Not a merge commit. Skipping pipeline."
                     currentBuild.result = 'ABORTED'
                     error("Abort: Not a merge into hotfix branch.")
+                    }
                 }
             }
         }
