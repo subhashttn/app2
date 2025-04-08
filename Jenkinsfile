@@ -16,7 +16,7 @@ pipeline {
             steps{
                 script {
                     def isMergeCommit = sh(script: "git log -1 --pretty=%P | wc -w", returnStdout: true).trim()
-                    if (isMergeCommit.toInteger() < 2) {
+                    if (isMergeCommit.toInteger() ==0) {
                     echo "Not a merge commit. Skipping pipeline."
                     currentBuild.result = 'ABORTED'
                     error("Abort: Not a merge into hotfix branch.")
@@ -86,7 +86,7 @@ pipeline {
         success {
             script {
                 echo "Deployment successful!"
-                mail to: 'abashkumarshah@gmail.com', subject: 'App2 Deployment Success hogaya', body: 'App2 deployed successfully to EKS.'
+                mail to: 'abashkumarshah@gmail.com', subject: 'App2 Deployment Success', body: 'App2 deployed successfully to EKS.'
             }
         }
         failure {
