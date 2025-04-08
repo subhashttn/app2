@@ -12,6 +12,17 @@ pipeline {
     }
 
     stages {
+        stage('check if Merge'){
+            steps{
+                script {
+                    def isMergeCommit = sh(script: "git log -1 --pretty=%P | wc -w", returnStdout: true).trim()
+                    if (isMergeCommit.toInteger() < 2) {
+                    echo "Not a merge commit. Skipping pipeline."
+                    currentBuild.result = 'ABORTED'
+                    error("Abort: Not a merge into hotfix branch.")
+          }
+            }
+        }
         stage('Clone Repository') {
             steps {
                 git credentialsId: 'git-ssh-key', url: 'git@github.com:subhashttn/app2.git', branch: 'hotflix'
