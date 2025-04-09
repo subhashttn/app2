@@ -92,7 +92,7 @@ pipeline {
         failure {
             script {
                 echo "Deployment failed!"
-                mail to: 'abashkumarshah@gmail.com', subject: 'App2 Deployment Failed', body: 'App2 deployment failed. Please check Jenkins logs.'
+                mail to: 'abashkumarshah@gmail.com', subject: 'App2 Deployment Fail', body: 'App2 deployment failed. Please check Jenkins logs.'
             }
         }
     }
